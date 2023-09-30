@@ -1,6 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import * as d3 from 'd3';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 function HomePage() {
+  const [data, setData] = useState({
+    datasets: [
+      {
+          data: [],
+          backgroundColor: []
+      }
+    ], 
+    labels: []  
+  });
+  const [d3Data, setd3Data] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:3300/budget').then((res) => {
+      setData({
+        datasets: [
+          {
+              data: res.data.myBudget.map(i => i.budget),
+              backgroundColor: [
+                  '#0AFAF7',
+                  '#73FA0A',
+                  '#320AFA',
+                  '#FA0A0A',
+                  '#FA5E0A',
+                  '#DAF7A6',
+                  '#FF5733',
+                  '#581845'
+              ]
+          }
+        ], 
+        labels: res.data.myBudget.map(i => i.title)
+      });
+      setd3Data(
+        res.data.myBudget.map(i => ({label: i.title, value: i.budget}))
+      )
+    });
+  }, [data]);
+
   return (
     <main className = "center" id = 'main'>
       <div className = "page-area">
@@ -42,12 +85,12 @@ function HomePage() {
 
         <article className = "text-box">
           <h1>Chart.js</h1>
-          <p><canvas id="myChart" width="1vw" height="1vh"></canvas></p>
+          {data.datasets[0].data.length === 0 ? <p>loading chart data....</p> : <Pie data={data}/>}
         </article>
 
         <article className = "text-box">
           <h1>D3.js</h1>
-          <svg width="20rem" height="12rem"></svg>
+          
         </article>
       </div>
     </main>
