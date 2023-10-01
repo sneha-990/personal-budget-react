@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import * as d3 from 'd3';
+import PieGraph from './PieGraph';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -90,7 +90,13 @@ function HomePage() {
 
         <article className = "text-box">
           <h1>D3.js</h1>
-          
+          <PieGraph
+            data={d3Data}
+            width={200}
+            height={200}
+            innerRadius={60}
+            outerRadius={100}
+          />
         </article>
       </div>
     </main>
