@@ -94,7 +94,7 @@ function HomePage() {
             data={d3Data}
             width={200}
             height={200}
-            innerRadius={60}
+            innerRadius={0}
             outerRadius={100}
           />
         </article>
