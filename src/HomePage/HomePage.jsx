@@ -92,10 +92,10 @@ function HomePage() {
           <h1>D3.js</h1>
           <PieGraph
             data={d3Data}
-            width={200}
-            height={200}
-            innerRadius={0}
-            outerRadius={100}
+            width={350}
+            height={350}
+            innerRadius={40}
+            outerRadius={150}
           />
         </article>
       </div>
